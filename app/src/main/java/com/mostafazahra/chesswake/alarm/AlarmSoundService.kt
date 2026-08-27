@@ -89,7 +89,7 @@ class AlarmSoundService : Service() {
             "Alarm",
             NotificationManager.IMPORTANCE_HIGH,
         )
-        channel.setSound(null, null) // sound is played by MediaPlayer, not the channel
+        channel.setSound(null, null)
         channel.enableVibration(false)
         manager.createNotificationChannel(channel)
     }

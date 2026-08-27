@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.mostafazahra.chesswake.alarm.AlarmScheduler
+import com.mostafazahra.chesswake.puzzle.PuzzleActivity
 import com.mostafazahra.chesswake.ui.theme.ChessWakeTheme
 import java.util.Calendar
 
@@ -78,6 +79,16 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             scheduleTestAlarm(context)
         }) {
             Text("Schedule test alarm (+2 min)")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            context.startActivity(
+                Intent(context, PuzzleActivity::class.java),
+            )
+        }) {
+            Text("Test the puzzle")
         }
     }
 }

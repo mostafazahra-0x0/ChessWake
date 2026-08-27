@@ -28,6 +28,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Standalone puzzle host used for testing the board without the alarm (Step 3) -->
+        <activity
+            android:name=".puzzle.PuzzleActivity"
+            android:exported="false" />
+
         <!-- Full-screen alarm activity shown on top of the lock screen when the alarm fires -->
         <activity
             android:name=".alarm.AlarmActivity"
