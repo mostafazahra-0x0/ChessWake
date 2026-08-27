@@ -59,12 +59,6 @@ class AlarmSoundService : Service() {
     }
 
     private fun buildNotification(): Notification {
-        val dismissIntent = PendingIntent.getService(
-            this,
-            0,
-            Intent(this, AlarmSoundService::class.java),
-            PendingIntent.FLAG_IMMUTABLE,
-        )
         val contentIntent = PendingIntent.getActivity(
             this,
             0,
@@ -76,7 +70,6 @@ class AlarmSoundService : Service() {
             .setContentTitle("ChessWake Alarm")
             .setContentText("Solve the puzzle to dismiss")
             .setContentIntent(contentIntent)
-            .addAction(0, "Stop", dismissIntent)
             .setOngoing(true)
             .setCategory(Notification.CATEGORY_ALARM)
             .build()
