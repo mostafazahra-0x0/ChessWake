@@ -28,6 +28,25 @@
             </intent-filter>
         </activity>
 
+        <!-- Full-screen alarm activity shown on top of the lock screen when the alarm fires -->
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.ChessWake.FullScreen" />
+
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:exported="false" />
+
+        <service
+            android:name=".alarm.AlarmSoundService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
     </application>
 
 </manifest>
