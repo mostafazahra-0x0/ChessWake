@@ -4,6 +4,8 @@
 
 ChessWake started from a simple idea: instead of tapping "dismiss" on autopilot, you solve a small chess puzzle first — just enough mental engagement to break the inertia of half-asleep dismissal. It's privacy-first, offline-first, and free.
 
+> **Current status:** scoped to a 10-day personal experiment — see [docs/MVP-paln.md](docs/MVP-paln.md). The active feature set is intentionally minimal (one hardcoded puzzle, no accounts).
+
 ---
 
 ## Features
@@ -60,13 +62,18 @@ Any future cloud features (e.g. cross-device sync) will be strictly optional and
 
 ## Installation
 
-> ChessWake is not yet available on any app store. Build instructions will be added once the first working build is ready.
+> ChessWake is not yet available on any app store.
+
+Open the project root in **Android Studio**. The Gradle wrapper is not checked into git, so let Android Studio regenerate it (it will prompt "Gradle wrapper not found — fix?" → click **Fix**), or run from a terminal:
 
 ```bash
 git clone https://github.com/mostafazahra-0x0/ChessWake.git
 cd ChessWake
+gradle wrapper   # generates ./gradlew once
 ./gradlew assembleDebug
 ```
+
+Requires: JDK 17, Android SDK with API 35. Build output: `app/build/outputs/apk/debug/app-debug.apk`.
 
 ---
 
