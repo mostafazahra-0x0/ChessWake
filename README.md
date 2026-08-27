@@ -64,12 +64,11 @@ Any future cloud features (e.g. cross-device sync) will be strictly optional and
 
 > ChessWake is not yet available on any app store.
 
-Open the project root in **Android Studio**. The Gradle wrapper is not checked into git, so let Android Studio regenerate it (it will prompt "Gradle wrapper not found — fix?" → click **Fix**), or run from a terminal:
+Open the project root in **Android Studio**, or build from a terminal:
 
 ```bash
 git clone https://github.com/mostafazahra-0x0/ChessWake.git
 cd ChessWake
-gradle wrapper   # generates ./gradlew once
 ./gradlew assembleDebug
 ```
 
