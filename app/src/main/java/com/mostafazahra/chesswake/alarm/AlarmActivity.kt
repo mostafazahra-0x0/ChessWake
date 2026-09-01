@@ -31,7 +31,7 @@ class AlarmActivity : ComponentActivity() {
                         PuzzleScreen(
                             puzzle = Puzzles.perfectMateInOne,
                             onSolved = {
-                                AlarmSoundService.stop(this)
+                                AlarmSoundService.stop(this@AlarmActivity)
                                 finish()
                             },
                             modifier = Modifier.align(Alignment.Center),

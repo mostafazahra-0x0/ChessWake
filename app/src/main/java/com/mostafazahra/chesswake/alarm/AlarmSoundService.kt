@@ -11,7 +11,9 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.IBinder
+import com.mostafazahra.chesswake.R
 import android.os.VibrationEffect
+import android.content.pm.ServiceInfo
 import android.os.Vibrator
 
 /**
@@ -31,7 +33,7 @@ class AlarmSoundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createChannel()
-        startForeground(NOTIFICATION_ID, buildNotification(), FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+        startForeground(NOTIFICATION_ID, buildNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
         startLoopingAlarm()
         return START_NOT_STICKY
     }
