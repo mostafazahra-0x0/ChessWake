@@ -10,7 +10,11 @@ between files:
   2. every `R.string.x` / `R.drawable.x` / `R.raw.x` / `R.color.x` / `R.style.x`
      reference exists in `res/`;
   3. every `<string name="x">` placeholder count matches the number of arguments
-     at its Kotlin call site (a cheap, conservative check).
+     at its Kotlin call site (a cheap, conservative check);
+  4. every *use* of a type this project declares is either imported or in the same
+     package. That is the reverse of check 1, and it is the one that catches a
+     missing `import com.mostafazahra.chesswake.MainActivity` — the kind of error
+     that otherwise costs a whole Android build to discover.
 
 It is deliberately conservative: anything it cannot parse is skipped rather than
 reported. Exit code 1 means "something looks broken".
@@ -38,6 +42,23 @@ DECL_RE = re.compile(
     re.MULTILINE,
 )
 R_REF_RE = re.compile(r"\bR\.(string|drawable|raw|color|style|mipmap|plurals)\.(\w+)")
+
+#: Type declarations - the names another package must import in order to use them.
+TYPE_DECL_RE = re.compile(
+    r"^\s*(?:@\w+(?:\([^)]*\))?\s*)*"
+    r"(?:public\s+|internal\s+|private\s+|abstract\s+|sealed\s+|open\s+|data\s+|value\s+|annotation\s+|enum\s+)*"
+    r"(?:class|object|interface)\s+([A-Z]\w*)",
+    re.MULTILINE,
+)
+IMPORT_ANY_RE = re.compile(r"^\s*import\s+([\w.]+)(?:\s+as\s+\w+)?", re.MULTILINE)
+USE_RE = re.compile(r"(?<![\w.$])([A-Z]\w*)")
+BLOCK_COMMENT_RE = re.compile(r"/\*.*?\*/", re.DOTALL)
+LINE_COMMENT_RE = re.compile(r"//[^\n]*")
+TRIPLE = '"' * 3
+STRING_RE = re.compile(TRIPLE + r"(?:.|\n)*?" + TRIPLE + r"|\"(?:\\.|[^\"\\])*\"")
+FQ_PROJECT_RE = re.compile(r"\bcom\.mostafazahra\.chesswake[\w.]*$")
+
+TEST_SRC = REPO / "app/src/test/java"
 
 
 def declared_names() -> dict[str, set[str]]:
@@ -140,16 +161,93 @@ def check_placeholders() -> list[str]:
     return problems
 
 
+def all_sources() -> list[Path]:
+    """Main and unit-test Kotlin sources."""
+    roots = [root for root in (SRC, TEST_SRC) if root.exists()]
+    return sorted(path for root in roots for path in root.rglob("*.kt"))
+
+
+def type_index(paths: list[Path]) -> dict[str, set[str]]:
+    """type name -> the packages that declare it."""
+    table: dict[str, set[str]] = defaultdict(set)
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        package_match = PACKAGE_RE.search(text)
+        if not package_match:
+            continue
+        for name in TYPE_DECL_RE.findall(text):
+            table[name].add(package_match.group(1))
+    return table
+
+
+def blank_out(match: re.Match) -> str:
+    """Replace prose with blanks that keep the line count, so reported lines match."""
+    return "\n" * match.group(0).count("\n")
+
+
+def strip_prose(text: str) -> str:
+    """Blank out comments and string literals so prose cannot look like code."""
+    without_strings = STRING_RE.sub(blank_out, text)
+    without_blocks = BLOCK_COMMENT_RE.sub(blank_out, without_strings)
+    return LINE_COMMENT_RE.sub(blank_out, without_blocks)
+
+
+def check_missing_imports(paths: list[Path], types: dict[str, set[str]]) -> list[str]:
+    """Uses of project-declared types that are neither imported nor same-package.
+
+    Only names this project declares are considered, so the crowd of Android,
+    Compose and stdlib identifiers needs no whitelist: those have to be imported
+    too, and anything imported is skipped. Files with a wildcard import are
+    skipped because they are undecidable here.
+    """
+    problems: list[str] = []
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        package_match = PACKAGE_RE.search(text)
+        package = package_match.group(1) if package_match else ""
+        imports = IMPORT_ANY_RE.findall(text)
+        if any(fqcn.endswith(".*") for fqcn in imports):
+            continue
+        imported = {fqcn.rsplit(".", 1)[-1] for fqcn in imports}
+        code = strip_prose(text)
+        declared_here = set(TYPE_DECL_RE.findall(code))
+        for match in USE_RE.finditer(code):
+            name = match.group(1)
+            if name not in types or name in declared_here or package in types[name]:
+                continue
+            if name in imported or name in GENERATED:
+                continue
+            before = code[: match.start()].rstrip()
+            if before.endswith(".") or FQ_PROJECT_RE.search(before):
+                continue  # fully qualified reference
+            line = code[: match.start()].count("\n") + 1
+            problems.append(
+                f"{path}:{line}: {name} is used but not imported "
+                f"(declared in {', '.join(sorted(types[name]))})",
+            )
+            break  # one report per file is enough to act on
+    return problems
+
+
 def main() -> int:
     decls = declared_names()
     res = resource_names()
-    problems = check_imports(decls) + check_resources(res) + check_placeholders()
+    sources = all_sources()
+    problems = (
+        check_imports(decls)
+        + check_resources(res)
+        + check_placeholders()
+        + check_missing_imports(sources, type_index(sources))
+    )
     if problems:
         print(f"{len(problems)} problem(s):")
         for problem in sorted(set(problems)):
             print("  -", problem)
         return 1
-    print("ok: imports, resource references and string placeholders all resolve")
+    print(
+        "ok: imports, resource references, string placeholders and cross-package "
+        "type uses all resolve",
+    )
     return 0
 
 
