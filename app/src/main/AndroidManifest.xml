@@ -1,51 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Used to schedule the exact alarm (Step 2+) -->
+    <!--
+      Alarms are the product, so the app asks for the exact-alarm permission in both
+      of its forms:
+
+        * SCHEDULE_EXACT_ALARM — API 31/32, revocable by the user, which is why the
+          alarms screen checks it and links to the settings page.
+        * USE_EXACT_ALARM — API 33+, granted automatically to apps whose core
+          function is an alarm clock. ChessWake is exactly that, so it qualifies
+          under the Play policy for this permission.
+    -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <!-- Used to notify the user about the alarm -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <!-- Android 13+ requires a runtime grant before any notification can be posted. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Keeps the alarm sound looping across screen states without being paused -->
+
+    <!-- Shows the puzzle over the lock screen when the device is idle. -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- Keeps the alarm sound looping while the screen is off. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-    <!-- Prevents vibration from being disturbed -->
+
+    <!-- Held briefly by the receiver so the sound service can start before the CPU sleeps. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- Re-books alarms after a reboot, a timezone change or an app update. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--
+      Package visibility (Android 11+): without this, `getPackageInfo` for Sleep as
+      Android throws NameNotFoundException even when it is installed, and the
+      integration toggle would always report "not installed".
+    -->
+    <queries>
+        <package android:name="com.urbandroid.sleep" />
+        <intent>
+            <action android:name="android.intent.action.SET_ALARM" />
+        </intent>
+    </queries>
+
     <application
+        android:name=".ChessWakeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ChessWake">
+        android:theme="@style/Theme.ChessWake.Splash"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="33">
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Standalone puzzle host used for testing the board without the alarm (Step 3) -->
-        <activity
-            android:name=".puzzle.PuzzleActivity"
-            android:exported="false" />
-
-        <!-- Full-screen alarm activity shown on top of the lock screen when the alarm fires -->
+        <!--
+          The ringing alarm. Separate task, no recents entry, shown over the lock
+          screen and allowed to turn the display on. `singleTask` plus the
+          `onNewIntent` handling in the activity means a second alarm firing while
+          one is on screen rebuilds the puzzle instead of stacking activities.
+        -->
         <activity
             android:name=".alarm.AlarmActivity"
-            android:exported="false"
             android:excludeFromRecents="true"
+            android:exported="false"
             android:launchMode="singleTask"
             android:showWhenLocked="true"
-            android:turnScreenOn="true"
-            android:theme="@style/Theme.ChessWake.FullScreen" />
+            android:taskAffinity=".alarm"
+            android:theme="@style/Theme.ChessWake.Alarm"
+            android:turnScreenOn="true" />
 
+        <!--
+          Not exported: only this app's own AlarmManager PendingIntents and
+          notification actions deliver these two actions.
+        -->
         <receiver
             android:name=".alarm.AlarmReceiver"
-            android:exported="false" />
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.mostafazahra.chesswake.action.ALARM" />
+                <action android:name="com.mostafazahra.chesswake.action.SNOOZE_NOW" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+          Exported because the system delivers BOOT_COMPLETED. `MY_PACKAGE_REPLACED`
+          and the time/timezone actions are here too: all of them silently drop
+          pending alarms, so all of them need a re-book.
+        -->
+        <receiver
+            android:name=".alarm.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".alarm.AlarmSoundService"

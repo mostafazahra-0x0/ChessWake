@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Adaptive icon background: the same green the Compose palette is built on. -->
     <color name="ic_launcher_background">#1B5E20</color>
+    <color name="splash_background">#1B5E20</color>
+
+    <!-- Window backgrounds, overridden in values-night. -->
+    <color name="window_background">#FBFDF7</color>
+
+    <!-- Always dark: the alarm is read in a dark room. -->
+    <color name="alarm_background">#0E120F</color>
 </resources>

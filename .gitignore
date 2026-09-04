@@ -7,3 +7,10 @@ local.properties
 /captures
 .externalNativeBuild
 .cxx
+
+# Captured CI/Gradle output (see tools/annotate_ci_log.py)
+build.log
+
+# Python bytecode from the tools/ scripts
+__pycache__/
+*.pyc
