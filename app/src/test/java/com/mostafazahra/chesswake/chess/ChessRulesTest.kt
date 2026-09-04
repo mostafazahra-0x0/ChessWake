@@ -28,16 +28,16 @@ class ChessRulesTest {
         assertTrue("queen-side castling should be legal", "e1c1" in moves)
 
         val afterKingSide = MoveGenerator.applyMove(position, move("e1g1"))
-        assertEquals(Piece.WHITE_KING, afterKingSide.pieceAt(Square.parse("g1")))
-        assertEquals(Piece.WHITE_ROOK, afterKingSide.pieceAt(Square.parse("f1")))
-        assertNull("a1 must be empty after O-O", afterKingSide.pieceAt(Square.parse("a1")))
+        assertEquals(Piece.WHITE_KING, afterKingSide.pieceAt(square("g1")))
+        assertEquals(Piece.WHITE_ROOK, afterKingSide.pieceAt(square("f1")))
+        assertNull("a1 must be empty after O-O", afterKingSide.pieceAt(square("a1")))
         assertEquals(PieceColor.BLACK, afterKingSide.sideToMove)
         // White has castled; Black has not.
         assertEquals("r3k2r/8/8/8/8/8/8/R4RK1 b kq - 1 1", afterKingSide.fen)
 
         val afterQueenSide = MoveGenerator.applyMove(position, move("e1c1"))
-        assertEquals(Piece.WHITE_KING, afterQueenSide.pieceAt(Square.parse("c1")))
-        assertEquals(Piece.WHITE_ROOK, afterQueenSide.pieceAt(Square.parse("d1")))
+        assertEquals(Piece.WHITE_KING, afterQueenSide.pieceAt(square("c1")))
+        assertEquals(Piece.WHITE_ROOK, afterQueenSide.pieceAt(square("d1")))
     }
 
     @Test
@@ -95,8 +95,8 @@ class ChessRulesTest {
         assertTrue(MoveGenerator.isCapture(position, capture))
 
         val after = MoveGenerator.applyMove(position, capture)
-        assertNull("the captured pawn on f5 is removed", after.pieceAt(Square.parse("f5")))
-        assertEquals(Piece.WHITE_PAWN, after.pieceAt(Square.parse("f6")))
+        assertNull("the captured pawn on f5 is removed", after.pieceAt(square("f5")))
+        assertEquals(Piece.WHITE_PAWN, after.pieceAt(square("f6")))
     }
 
     @Test
@@ -123,7 +123,7 @@ class ChessRulesTest {
         )
 
         val afterQueen = MoveGenerator.applyMove(position, move("a7a8q"))
-        assertEquals(Piece.WHITE_QUEEN, afterQueen.pieceAt(Square.parse("a8")))
+        assertEquals(Piece.WHITE_QUEEN, afterQueen.pieceAt(square("a8")))
     }
 
     @Test
@@ -273,6 +273,10 @@ class ChessRulesTest {
         requireNotNull(Position.fromFen(fen)) { "test FEN did not parse: $fen" }
 
     private fun move(uci: String): Move = requireNotNull(Move.fromUci(uci)) { "bad UCI: $uci" }
+
+    /** Square.parse is nullable; the squares used here are all real. */
+    private fun square(name: String): Square =
+        requireNotNull(Square.parse(name)) { "bad square name: $name" }
 
     private companion object {
         const val CASTLE_BOTH = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"
