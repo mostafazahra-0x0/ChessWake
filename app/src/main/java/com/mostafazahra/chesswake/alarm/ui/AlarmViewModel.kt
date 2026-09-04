@@ -30,6 +30,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -209,7 +210,7 @@ class AlarmViewModel @Inject constructor(
 
     /** Counts up while the alarm rings, so the user can see how long they have been awake. */
     private suspend fun tickElapsed() {
-        while (isActive) {
+        while (currentCoroutineContext().isActive) {
             delay(1_000)
             val since = ringingState.ringingSinceMillis
             val elapsed = if (since > 0L) {

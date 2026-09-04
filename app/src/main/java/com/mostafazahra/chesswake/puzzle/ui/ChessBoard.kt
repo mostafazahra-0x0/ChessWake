@@ -104,8 +104,8 @@ fun ChessBoard(
         // Deriving every size from one eighth of the board width keeps the grid
         // exact and the glyphs correctly scaled on any screen or font scale.
         val squareSize = maxWidth / 8
-        val glyphSize: TextUnit = with(density) { (squareSize * GLYPH_RATIO).toPx() }.toSp()
-        val coordinateSize: TextUnit = with(density) { (squareSize * COORDINATE_RATIO).toPx() }.toSp()
+        val glyphSize: TextUnit = with(density) { (squareSize * GLYPH_RATIO).toPx().toSp() }
+        val coordinateSize: TextUnit = with(density) { (squareSize * COORDINATE_RATIO).toPx().toSp() }
         val coordinatePadding = squareSize * COORDINATE_PADDING_RATIO
         val dotSize = squareSize * TARGET_DOT_RATIO
         val ringSize = squareSize * CAPTURE_RING_RATIO

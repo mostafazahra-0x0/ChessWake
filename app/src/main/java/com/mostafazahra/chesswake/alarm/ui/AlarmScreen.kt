@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.keepScreenOn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -22,11 +21,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -70,15 +71,25 @@ fun AlarmScreen(
     modifier: Modifier = Modifier,
 ) {
     val haptics = LocalHapticFeedback.current
+    val view = LocalView.current
     val colors = MaterialTheme.colorScheme
     val boardDescription = stringResource(R.string.alarm_screen_board_description)
+
+    // Compose has no keepScreenOn modifier: the flag lives on the host View, so
+    // it is set and cleared around the composition instead of chained into the
+    // modifier. Clearing it on dispose matters - this screen must never be the
+    // reason a phone stays lit in somebody's pocket.
+    DisposableEffect(state.keepScreenOn) {
+        view.keepScreenOn = state.keepScreenOn
+        onDispose { view.keepScreenOn = false }
+    }
 
     // One haptic per feedback event, driven by the tick rather than by the state
     // itself so a recomposition cannot fire it twice.
     LaunchedEffect(state.feedbackTick) {
         if (state.feedbackTick == 0) return@LaunchedEffect
         when (state.feedbackKind) {
-            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.Reject)
+            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.VirtualKey)
             PuzzleFeedback.CORRECT -> haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             PuzzleFeedback.SOLVED -> haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         }
@@ -87,7 +98,6 @@ fun AlarmScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .then(if (state.keepScreenOn) Modifier.keepScreenOn() else Modifier)
             .background(colors.background)
             .safeDrawingPadding()
             .padding(horizontal = 20.dp),

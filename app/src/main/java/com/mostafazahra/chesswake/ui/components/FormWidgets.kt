@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -199,12 +198,18 @@ fun PresetChip(
     )
 }
 
-/** Chips that wrap onto further lines; `FlowRow` is still opt-in in foundation. */
+/**
+ * Chips that wrap onto further lines.
+ *
+ * `FlowRow` is still opt-in in foundation, and so is its scope type - which is
+ * why the content lambda is deliberately *not* a `FlowRowScope` receiver: that
+ * would push the opt-in onto every caller for a scope none of them needs.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FlowChipRow(
     modifier: Modifier = Modifier,
-    content: @Composable FlowRowScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     FlowRow(
         modifier = modifier.fillMaxWidth(),

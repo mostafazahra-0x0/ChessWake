@@ -87,7 +87,7 @@ fun PracticeScreen(
     LaunchedEffect(state.feedbackTick) {
         if (state.feedbackTick == 0) return@LaunchedEffect
         when (state.feedbackKind) {
-            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.Reject)
+            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.VirtualKey)
             PuzzleFeedback.CORRECT -> haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             PuzzleFeedback.SOLVED -> haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         }

@@ -57,9 +57,11 @@ class AlarmNotifications @Inject constructor(
             CHANNEL_RINGING,
             context.getString(R.string.channel_ringing_name),
             NotificationManager.IMPORTANCE_HIGH,
-            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_ringing_description)
+            // setGroup: NotificationChannel has no 4-argument constructor, and the
+            // local above must not be called `group` or it shadows this property.
+            group = GROUP_ID
             // The service owns the audio; a channel sound would double up.
             setSound(null, null)
             enableVibration(false)
@@ -71,9 +73,9 @@ class AlarmNotifications @Inject constructor(
             CHANNEL_SERVICE,
             context.getString(R.string.channel_service_name),
             NotificationManager.IMPORTANCE_HIGH,
-            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_service_description)
+            group = GROUP_ID
             setSound(null, null)
             enableVibration(false)
         }
@@ -82,9 +84,9 @@ class AlarmNotifications @Inject constructor(
             CHANNEL_UPCOMING,
             context.getString(R.string.channel_upcoming_name),
             NotificationManager.IMPORTANCE_LOW,
-            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_upcoming_description)
+            group = GROUP_ID
             setShowBadge(false)
         }
 
