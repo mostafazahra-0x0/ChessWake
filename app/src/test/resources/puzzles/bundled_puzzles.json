@@ -1,0 +1,835 @@
+{
+  "puzzles": [
+    {
+      "alternatives": [
+        "e5f7"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 1,
+      "fen": "6rk/6pp/8/4N3/8/8/8/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The king is buried by its own pieces. A knight does the work.",
+      "id": "cw-m1-001",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Smothered Mate",
+      "solution": [
+        "e5f7"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a1a8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook belongs on the eighth rank.",
+      "id": "cw-m1-002",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "a1a8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "b1b8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/8/8/5PPP/1R4K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on b1 is the one to move.",
+      "id": "cw-m1-003",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank from the b-File",
+      "solution": [
+        "b1b8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "c1c8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/8/1B6/5PPP/2Q3K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on c1 is the one to move.",
+      "id": "cw-m1-004",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Battery on the Diagonal",
+      "solution": [
+        "c1c8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a1a8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "r5k1/5ppp/8/8/8/5N2/5PPP/R3K3 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on a1 is the one to move.",
+      "id": "cw-m1-005",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Knight Jump to the Fork",
+      "solution": [
+        "a1a8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "b2b8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "7k/R7/8/8/8/8/1R6/7K w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "One rook holds the seventh; the other finishes on the eighth.",
+      "id": "cw-m1-006",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Ladder Mate",
+      "solution": [
+        "b2b8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "d1d8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/8/8/5PPP/3Q2K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on d1 is the one to move.",
+      "id": "cw-m1-007",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Queen Double Attack",
+      "solution": [
+        "d1d8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "f1f8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "7k/8/6K1/8/8/8/8/5Q2 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on f1 is the one to move.",
+      "id": "cw-m1-008",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Queen Mate on the Back Rank",
+      "solution": [
+        "f1f8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a2a8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/8/8/Q4PPP/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on a2 is the one to move.",
+      "id": "cw-m1-009",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Queen Takes the Back Rank",
+      "solution": [
+        "a2a8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "d1d8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/2B5/8/5PPP/3Q2K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on d1 is the one to move.",
+      "id": "cw-m1-010",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Queen and Bishop Battery",
+      "solution": [
+        "d1d8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "g1g8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "k7/8/1K6/8/8/8/8/6Q1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "Cut off the eighth rank, close to the king.",
+      "id": "cw-m1-011",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Queen and King Box Mate",
+      "solution": [
+        "g1g8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a1a8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "7k/8/6K1/8/8/8/8/R7 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on a1 is the one to move.",
+      "id": "cw-m1-012",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Rook Box Mate",
+      "solution": [
+        "a1a8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a1a8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "5k2/5ppp/8/8/8/8/5PPP/R3R1K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on a1 is the one to move.",
+      "id": "cw-m1-013",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Two Rooks, One File",
+      "solution": [
+        "a1a8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a2a7"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "7k/8/8/8/8/8/R7/1R5K w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "Put a rook on the seventh rank first.",
+      "id": "cw-m2-001",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "Climbing the Ladder",
+      "solution": [
+        "a2a7",
+        "h8g8",
+        "b1b8"
+      ],
+      "source": "curated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "3k3r/3ppppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The rook on a1 is the one to move.",
+      "id": "cw-win-001",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Back-Rank Before It Happens",
+      "solution": [
+        "a1a8",
+        "d8c7",
+        "a8h8"
+      ],
+      "source": "curated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win 5 pawns' worth.",
+      "difficulty": 3,
+      "fen": "2k5/8/8/3B4/8/8/2r3q1/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The bishop on d5 is the one to move.",
+      "id": "cw-win-002",
+      "material_gain": 570,
+      "mates_in": 0,
+      "name": "Bishop Battery",
+      "solution": [
+        "d5g2",
+        "c2g2",
+        "e1f1"
+      ],
+      "source": "curated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win 8 pawns' worth.",
+      "difficulty": 3,
+      "fen": "4k3/4P3/4K3/8/8/8/8/8 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "Promote with check, and the king has nowhere to go.",
+      "id": "cw-win-003",
+      "material_gain": 800,
+      "mates_in": 0,
+      "name": "Pawn Promotion",
+      "solution": [
+        "e6d6",
+        "e8f7",
+        "e7e8q"
+      ],
+      "source": "curated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "6k1/5ppp/8/8/8/8/1r3PPP/1R4K1 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The rook on b1 is the one to move.",
+      "id": "cw-win-004",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Rook Trade on the Second",
+      "solution": [
+        "b1b2",
+        "g8f8",
+        "b2b8"
+      ],
+      "source": "curated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "r3k3/8/1P6/3N4/8/8/8/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "One piece can attack the king and the rook at once.",
+      "id": "cw-win-005",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Royal Fork",
+      "solution": [
+        "d5c7",
+        "e8f8",
+        "c7a8"
+      ],
+      "source": "curated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [
+        "a6a1"
+      ],
+      "description": "Black to move. Find the mate in one.",
+      "difficulty": 1,
+      "fen": "2k5/pp6/r7/8/8/8/5PPP/7K b - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on a6 is the one to move.",
+      "id": "cw-m1-014",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "a6a1"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a3h3"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 1,
+      "fen": "8/8/8/8/8/R7/8/5K1k w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on a3 is the one to move.",
+      "id": "cw-m1-015",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Rook Mate",
+      "solution": [
+        "a3h3"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "g5f7"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 1,
+      "fen": "6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The knight on g5 is the one to move.",
+      "id": "cw-m1-016",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Smothered Mate",
+      "solution": [
+        "g5f7"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "g4g8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "7k/8/5N2/8/6R1/8/8/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on g4 is the one to move.",
+      "id": "cw-m1-017",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "g4g8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "b2b8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "k7/8/2N5/8/8/8/1R6/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on b2 is the one to move.",
+      "id": "cw-m1-018",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "b2b8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "e2e8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/8/8/7r/8/4QPPP/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on e2 is the one to move.",
+      "id": "cw-m1-019",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "e2e8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a4e8"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "6k1/5ppp/r7/8/Q7/8/5PPP/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on a4 is the one to move.",
+      "id": "cw-m1-020",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "a4e8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "e6e1"
+      ],
+      "description": "Black to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "3k4/pp6/4q3/8/8/8/5PPP/7K b - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on e6 is the one to move.",
+      "id": "cw-m1-021",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "e6e1"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "a6a1",
+        "a6f1"
+      ],
+      "description": "Black to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "2k5/pp6/q7/8/8/8/5PPP/7K b - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on a6 is the one to move.",
+      "id": "cw-m1-022",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "a6f1"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "c6c1"
+      ],
+      "description": "Black to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "3k4/pp6/2r5/8/8/8/5PPP/6K1 b - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on c6 is the one to move.",
+      "id": "cw-m1-023",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Back-Rank Mate",
+      "solution": [
+        "c6c1"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [
+        "e2h2"
+      ],
+      "description": "White to move. Find the mate in one.",
+      "difficulty": 2,
+      "fen": "8/7k/8/8/8/6R1/4R3/K7 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on e2 is the one to move.",
+      "id": "cw-m1-024",
+      "material_gain": 0,
+      "mates_in": 1,
+      "name": "Rook Mate",
+      "solution": [
+        "e2h2"
+      ],
+      "source": "generated",
+      "theme": "mate_in_one"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a piece.",
+      "difficulty": 2,
+      "fen": "b1k5/8/8/3N4/8/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on d5 is the one to move.",
+      "id": "cw-win-006",
+      "material_gain": 330,
+      "mates_in": 0,
+      "name": "Wins a Bishop",
+      "solution": [
+        "d5b6",
+        "c8d8",
+        "b6a8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a piece.",
+      "difficulty": 2,
+      "fen": "4k1b1/8/8/8/4N3/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on e4 is the one to move.",
+      "id": "cw-win-007",
+      "material_gain": 330,
+      "mates_in": 0,
+      "name": "Wins a Bishop",
+      "solution": [
+        "e4f6",
+        "e8f8",
+        "f6g8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [
+        "a3a8"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "6k1/5ppp/8/8/2r5/Q7/5PPP/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on a3 is the one to move.",
+      "id": "cw-m2-002",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "Back-Rank Mate in Two",
+      "solution": [
+        "a3a8",
+        "c4c8",
+        "a8c8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [
+        "c4c8"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "6k1/5ppp/3r4/8/2Q5/8/5PPP/6K1 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on c4 is the one to move.",
+      "id": "cw-m2-003",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "Back-Rank Mate in Two",
+      "solution": [
+        "c4c8",
+        "d6d8",
+        "c8d8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [
+        "e6f7"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "7k/8/4K3/8/8/8/4Q3/8 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The king on e6 is the one to move.",
+      "id": "cw-m2-004",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "King Mate in Two",
+      "solution": [
+        "e6f7",
+        "h8h7",
+        "e2h5"
+      ],
+      "source": "generated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [
+        "g3c7"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "4k3/8/6K1/8/8/6Q1/8/8 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The queen on g3 is the one to move.",
+      "id": "cw-m2-005",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "Queen and King Mate in Two",
+      "solution": [
+        "g3c7",
+        "e8f8",
+        "c7d8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [
+        "d2d7"
+      ],
+      "description": "White to move. Find the mate in two \u2014 it works against any defence.",
+      "difficulty": 3,
+      "fen": "k7/8/8/8/8/8/3R4/1K2R3 w - - 0 1",
+      "goal": "CHECKMATE",
+      "hint": "The rook on d2 is the one to move.",
+      "id": "cw-m2-006",
+      "material_gain": 0,
+      "mates_in": 2,
+      "name": "Rook and King Mate in Two",
+      "solution": [
+        "d2d7",
+        "a8b8",
+        "e1e8"
+      ],
+      "source": "generated",
+      "theme": "mate_in_two"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "r1k5/8/8/8/2N5/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on c4 is the one to move.",
+      "id": "cw-win-008",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Wins a Rook",
+      "solution": [
+        "c4b6",
+        "c8d8",
+        "b6a8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "r3k3/8/8/3N4/8/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on d5 is the one to move.",
+      "id": "cw-win-009",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Wins a Rook",
+      "solution": [
+        "d5c7",
+        "e8f8",
+        "c7a8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "6k1/5ppp/8/8/1r6/1Q6/5PPP/6K1 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The queen on b3 is the one to move.",
+      "id": "cw-win-010",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Wins a Rook",
+      "solution": [
+        "b3b4",
+        "h7h6",
+        "b4f8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a rook.",
+      "difficulty": 3,
+      "fen": "6k1/5ppp/8/8/1r6/Q7/5PPP/6K1 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The queen on a3 is the one to move.",
+      "id": "cw-win-011",
+      "material_gain": 500,
+      "mates_in": 0,
+      "name": "Wins a Rook",
+      "solution": [
+        "a3b4",
+        "h7h6",
+        "b4f8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a queen.",
+      "difficulty": 3,
+      "fen": "q1k5/8/8/3N4/8/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on d5 is the one to move.",
+      "id": "cw-win-012",
+      "material_gain": 900,
+      "mates_in": 0,
+      "name": "Wins the Queen",
+      "solution": [
+        "d5b6",
+        "c8d8",
+        "b6a8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    },
+    {
+      "alternatives": [],
+      "description": "White to move. Win a queen.",
+      "difficulty": 3,
+      "fen": "2k3q1/8/8/5N2/8/8/P6P/4K3 w - - 0 1",
+      "goal": "WIN_MATERIAL",
+      "hint": "The knight on f5 is the one to move.",
+      "id": "cw-win-013",
+      "material_gain": 900,
+      "mates_in": 0,
+      "name": "Wins the Queen",
+      "solution": [
+        "f5e7",
+        "c8d8",
+        "e7g8"
+      ],
+      "source": "generated",
+      "theme": "win_material"
+    }
+  ],
+  "revision": 8748
+}
