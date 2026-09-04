@@ -95,7 +95,16 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build the debug APK and run the unit tests
-        run: ./gradlew --no-daemon --stacktrace assembleDebug testDebugUnitTest
+        # tee keeps the log for the annotation step below; the default bash shell
+        # runs with pipefail, so a Gradle failure still fails the step.
+        run: ./gradlew --no-daemon --stacktrace assembleDebug testDebugUnitTest 2>&1 | tee build.log
+
+      # Compile errors are otherwise only readable in the CI log. Re-emitting them
+      # as annotations puts each one next to its file in the diff and makes a red
+      # build legible from the REST API.
+      - name: Publish the failure as check annotations
+        if: failure()
+        run: python3 tools/annotate_ci_log.py build.log
 
       - name: Upload the debug APK
         uses: actions/upload-artifact@v4
