@@ -1,3 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ChessWake</string>
+
+    <!-- ── Notifications ─────────────────────────────────────────────── -->
+    <string name="notification_group_alarms">Alarms</string>
+    <string name="channel_ringing_name">Ringing alarm</string>
+    <string name="channel_ringing_description">Shown while an alarm is ringing and needs to be dismissed.</string>
+    <string name="channel_service_name">Alarm sound</string>
+    <string name="channel_service_description">Keeps the alarm sound playing while the screen is off.</string>
+    <string name="channel_upcoming_name">Upcoming alarm</string>
+    <string name="channel_upcoming_description">A quiet, ongoing reminder of the next alarm.</string>
+    <string name="alarm_default_label">Alarm</string>
+    <string name="notification_ringing_body">Solve the chess puzzle to turn this alarm off.</string>
+    <string name="notification_ringing_body_no_puzzle">Tap to turn this alarm off.</string>
+    <string name="notification_service_body">Alarm is ringing</string>
+    <string name="notification_upcoming_body">Rings %1$s</string>
+    <string name="action_open">Open</string>
+    <string name="action_snooze_minutes">Snooze %1$d min</string>
+
+    <!-- ── Bottom navigation ─────────────────────────────────────────── -->
+    <string name="tab_alarms">Alarms</string>
+    <string name="tab_practice">Practice</string>
+    <string name="tab_stats">Stats</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- ── Shared ────────────────────────────────────────────────────── -->
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_dismiss">Dismiss</string>
+    <string name="action_allow">Allow</string>
+    <string name="action_retry">Try again</string>
+    <string name="format_minutes">%1$d min</string>
+    <string name="format_seconds">%1$d s</string>
+    <string name="format_percent">%1$d%%</string>
+    <string name="format_days">%1$d d</string>
+    <string name="format_level">Level %1$d</string>
+    <string name="off">Off</string>
+
+    <!-- ── Alarms list ───────────────────────────────────────────────── -->
+    <string name="alarms_title">Alarms</string>
+    <string name="alarms_empty_title">No alarms yet</string>
+    <string name="alarms_empty_body">Create your first alarm. You will have to solve a chess puzzle before it stops ringing.</string>
+    <string name="alarms_new">New alarm</string>
+    <string name="alarms_toggle">Turn alarm on or off</string>
+    <string name="alarms_next_ring">Rings %1$s</string>
+    <string name="alarms_disabled">Off</string>
+    <string name="alarms_puzzle_line">%1$s · level %2$d</string>
+    <string name="alarms_any_puzzle">Any puzzle · level %1$d</string>
+    <string name="alarms_no_puzzle">No puzzle required</string>
+    <string name="alarms_delete_title">Delete alarm?</string>
+    <string name="alarms_delete_body">%1$s will no longer ring.</string>
+    <string name="alarms_exact_title">Alarms may be delayed</string>
+    <string name="alarms_exact_body">ChessWake needs the “Alarms &amp; reminders” permission to ring exactly on time, even in Doze.</string>
+    <string name="alarms_notifications_title">Notifications are off</string>
+    <string name="alarms_notifications_body">Without notifications the alarm may ring silently in the background.</string>
+    <string name="alarms_reliability_title">Make sure it rings</string>
+    <string name="alarms_reliability_body">Turn off battery optimisation for ChessWake so Android does not defer your alarm.</string>
+
+    <!-- ── Alarm editor ──────────────────────────────────────────────── -->
+    <string name="alarm_edit_title_new">New alarm</string>
+    <string name="alarm_edit_title_edit">Edit alarm</string>
+    <string name="alarm_edit_label">Label</string>
+    <string name="alarm_edit_label_hint">Wake up</string>
+    <string name="alarm_edit_section_time">Time</string>
+    <string name="alarm_edit_change_time">Change time</string>
+    <string name="alarm_edit_section_repeat">Repeat</string>
+    <string name="alarm_edit_section_puzzle">Puzzle</string>
+    <string name="alarm_edit_section_sound">Sound</string>
+    <string name="alarm_edit_section_snooze">Snooze</string>
+    <string name="alarm_edit_section_advanced">Advanced</string>
+    <string name="alarm_edit_theme">Puzzle theme</string>
+    <string name="alarm_edit_theme_any">Any theme</string>
+    <string name="alarm_edit_difficulty">Maximum difficulty</string>
+    <string name="alarm_edit_require_puzzle">Require a puzzle</string>
+    <string name="alarm_edit_require_puzzle_summary">The alarm cannot be dismissed without solving one.</string>
+    <string name="alarm_edit_volume">Volume</string>
+    <string name="alarm_edit_vibrate">Vibrate</string>
+    <string name="alarm_edit_crescendo">Crescendo</string>
+    <string name="alarm_edit_crescendo_summary">Start quietly and build up over this many seconds.</string>
+    <string name="alarm_edit_snooze_length">Snooze length</string>
+    <string name="alarm_edit_max_snoozes">Maximum snoozes</string>
+    <string name="alarm_edit_max_snoozes_summary">0 turns snoozing off entirely.</string>
+    <string name="alarm_edit_mirror_saa">Mirror to Sleep as Android</string>
+    <string name="alarm_edit_mirror_saa_summary">Creates a matching alarm in Sleep as Android so its sleep tracking sees it.</string>
+    <string name="alarm_edit_repeat_never">Once</string>
+    <string name="alarm_edit_repeat_weekdays">Weekdays</string>
+    <string name="alarm_edit_repeat_weekend">Weekend</string>
+    <string name="alarm_edit_repeat_every_day">Every day</string>
+    <string name="alarm_edit_discard_title">Discard changes?</string>
+    <string name="alarm_edit_discard_body">Your edits to this alarm will be lost.</string>
+    <string name="alarm_edit_discard_confirm">Discard</string>
+    <string name="alarm_edit_saved">Alarm saved</string>
+    <string name="alarm_edit_deleted">Alarm deleted</string>
+    <string name="alarm_edit_time_description">Alarm time %1$s</string>
+
+    <!-- ── Ringing alarm screen ──────────────────────────────────────── -->
+    <string name="alarm_screen_wake_up">Wake up</string>
+    <string name="alarm_screen_turn_off">Turn off</string>
+    <string name="alarm_screen_solve_to_dismiss">Solve to dismiss</string>
+    <string name="alarm_screen_snooze">Snooze %1$d min</string>
+    <string name="alarm_screen_no_snooze">No snoozes left</string>
+    <string name="alarm_screen_show_hint">Show hint</string>
+    <string name="alarm_screen_hint_label">Hint: %1$s</string>
+    <string name="alarm_screen_awake_for">Awake for %1$s</string>
+    <string name="alarm_screen_misses">Misses: %1$d</string>
+    <string name="alarm_screen_solved">Solved</string>
+    <string name="alarm_screen_board_description">Chess puzzle board</string>
+
+    <!-- ── Practice ──────────────────────────────────────────────────── -->
+    <string name="practice_title">Practice</string>
+    <string name="practice_new_puzzle">New puzzle</string>
+    <string name="practice_restart">Restart</string>
+    <string name="practice_hint">Hint</string>
+    <string name="practice_filter_theme">Theme</string>
+    <string name="practice_filter_difficulty">Max level</string>
+    <string name="practice_loading">Loading a puzzle…</string>
+    <string name="practice_solved">Solved!</string>
+    <string name="practice_next">Next</string>
+    <string name="practice_hint_line">Hint: %1$s</string>
+    <string name="practice_moves">Moves</string>
+    <string name="practice_wrong_attempts">Misses: %1$d</string>
+    <string name="practice_puzzle_count">%1$d puzzles available</string>
+
+    <!-- ── Stats ─────────────────────────────────────────────────────── -->
+    <string name="stats_title">Stats</string>
+    <string name="stats_current_streak">Current streak</string>
+    <string name="stats_longest_streak">Longest streak</string>
+    <string name="stats_last_solved">Last solved %1$s</string>
+    <string name="stats_attempts">Attempts</string>
+    <string name="stats_solved">Solved</string>
+    <string name="stats_accuracy">Accuracy</string>
+    <string name="stats_average_time">Average time</string>
+    <string name="stats_best_time">Best time</string>
+    <string name="stats_unsolved">unsolved</string>
+    <string name="stats_misses">%1$d misses</string>
+    <string name="stats_alarm_wakeups">Alarm wake-ups</string>
+    <string name="stats_by_theme">By theme</string>
+    <string name="stats_recent">Recent</string>
+    <string name="stats_empty">Nothing here yet. Solve a puzzle to start tracking.</string>
+    <string name="stats_clear">Clear history</string>
+    <string name="stats_clear_title">Clear all history?</string>
+    <string name="stats_clear_body">Every recorded attempt and your streak will be deleted from this device. This cannot be undone.</string>
+    <string name="stats_solved_fraction">%1$d / %2$d</string>
+
+    <!-- ── Settings ──────────────────────────────────────────────────── -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_dynamic_color">Dynamic colour</string>
+    <string name="settings_dynamic_color_summary">Take the palette from your wallpaper (Android 12+).</string>
+    <string name="settings_board">Board colours</string>
+    <string name="settings_board_summary">Light and dark squares.</string>
+    <string name="settings_board_reset">Reset board colours</string>
+    <string name="settings_board_classic">Classic</string>
+    <string name="settings_board_sage">Sage</string>
+    <string name="settings_board_slate">Slate</string>
+    <string name="settings_board_midnight">Midnight</string>
+    <string name="settings_show_coordinates">Show coordinates</string>
+    <string name="settings_section_alarms">Alarm defaults</string>
+    <string name="settings_default_theme">Default puzzle theme</string>
+    <string name="settings_default_difficulty">Default max difficulty</string>
+    <string name="settings_default_snooze">Default snooze length</string>
+    <string name="settings_default_max_snoozes">Default max snoozes</string>
+    <string name="settings_confirm_dismiss">Confirm dismissal</string>
+    <string name="settings_confirm_dismiss_summary">Require one more tap after solving, for a final beat of wakefulness.</string>
+    <string name="settings_keep_screen_on">Keep screen on during puzzles</string>
+    <string name="settings_section_integrations">Integrations</string>
+    <string name="settings_sleep_as_android">Sleep as Android</string>
+    <string name="settings_sleep_as_android_summary">Mirror alarms to Sleep as Android and let its smart wake-up window open the puzzle.</string>
+    <string name="settings_sleep_as_android_missing">Sleep as Android is not installed.</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_summary">ChessWake works fully offline. No accounts, no analytics, no ads — nothing ever leaves your device.</string>
+    <string name="settings_source">Source code</string>
+    <string name="settings_version">Version %1$s</string>
+    <!-- Not translated: it is a URL. -->
+    <string name="settings_source_url" translatable="false">https://github.com/mostafazahra-0x0/ChessWake</string>
+    <string name="settings_reset">Reset all settings</string>
+    <string name="settings_reset_title">Reset settings?</string>
+    <string name="settings_reset_body">Every preference goes back to its default. Your alarms and stats are kept.</string>
+    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_battery">Battery optimisation</string>
+    <string name="settings_battery_summary">Open system settings to exempt ChessWake from battery optimisation.</string>
 </resources>

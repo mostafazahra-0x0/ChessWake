@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.ChessWake" parent="android:Theme.Material.Light.NoActionBar" />
-    <style name="Theme.ChessWake.FullScreen">
-        <item name="android:windowFullscreen">true</item>
+
+    <!--
+      Base window theme. Compose draws everything inside it, so the XML theme
+      only decides the window background shown before the first frame and the
+      system bar colours.
+    -->
+    <style name="Theme.ChessWake" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!--
+      The ringing alarm forces a dark window on purpose: it is read in a dark
+      room, and inheriting the light window background would flash white before
+      Compose draws its first frame.
+
+      `shortEdges` lets the alarm run under a display cutout instead of being
+      letterboxed; it is ignored on API 26, which has no cutouts.
+    -->
+    <style name="Theme.ChessWake.Alarm" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/alarm_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-        <item name="android:windowShowWallpaper">true</item>
+    </style>
+
+    <!-- Cold-start splash; MainActivity installs it with `installSplashScreen()`. -->
+    <style name="Theme.ChessWake.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.ChessWake</item>
     </style>
 </resources>
