@@ -210,7 +210,7 @@
       "input": "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3"
     },
     "ep_pin_horizontal": {
-      "expected": "8/8/8/8/k2Pp2Q/8/8/3K4 b - - 0 1",
+      "expected": "8/8/8/8/k2Pp2Q/8/8/3K4 b - d3 0 1",
       "input": "8/8/8/8/k2Pp2Q/8/8/3K4 b - d3 0 1"
     },
     "fork_check": {

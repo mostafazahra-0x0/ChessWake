@@ -107,6 +107,13 @@ jobs:
       # Compile errors are otherwise only readable in the CI log. Re-emitting them
       # as annotations puts each one next to its file in the diff and makes a red
       # build legible from the REST API.
+      # Test failures carry their assertion messages in the JUnit XML; the console
+      # log names only the exception class. This is its own step because GitHub
+      # caps annotations at 10 per level per step.
+      - name: Publish test failures as check annotations
+        if: failure()
+        run: python3 tools/annotate_ci_log.py --junit app/build/test-results/testDebugUnitTest
+
       - name: Publish the failure as check annotations
         if: failure()
         run: python3 tools/annotate_ci_log.py build.log

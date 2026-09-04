@@ -158,11 +158,29 @@ def build_perft() -> dict:
     return result
 
 
+def reserialise(fen: str) -> str:
+    """python-chess's FEN for `fen`, with the en-passant field left as it was given.
+
+    python-chess omits the en-passant square when no *legal* en-passant capture
+    exists, and one of the positions below is exactly that case: in
+    `ep_pin_horizontal` the capturing pawn is pinned along the rank, so the
+    capture would expose its own king. ChessWake stores the square it was given
+    and writes it back out - which is what the FEN specification describes, keeps
+    parse -> serialise an identity, and costs nothing at move-generation time.
+    Every other field is python-chess's opinion, not ours.
+    """
+    fields = chess.Board(fen).fen().split()
+    given = fen.split()
+    if len(given) > 3 and given[3] != "-":
+        fields[3] = given[3]
+    return " ".join(fields)
+
+
 def build_fen_roundtrip() -> dict:
     """Every named position plus each bundled puzzle, FEN in -> FEN out."""
     entries = {}
     for name, fen in POSITIONS.items():
-        entries[name] = {"input": fen, "expected": chess.Board(fen).fen()}
+        entries[name] = {"input": fen, "expected": reserialise(fen)}
 
     bundled = REPO_ROOT / "app/src/test/resources/puzzles/bundled_puzzles.json"
     if bundled.exists():
@@ -170,7 +188,7 @@ def build_fen_roundtrip() -> dict:
         for puzzle in data["puzzles"]:
             entries[puzzle["id"]] = {
                 "input": puzzle["fen"],
-                "expected": chess.Board(puzzle["fen"]).fen(),
+                "expected": reserialise(puzzle["fen"]),
             }
     return entries
 

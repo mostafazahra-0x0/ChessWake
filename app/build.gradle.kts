@@ -8,6 +8,19 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
+// Full assertion messages in the CI log. Gradle's default output names the
+// exception class and nothing else, which is not enough to fix a red test
+// without downloading the XML report.
+tasks.withType<Test>().configureEach {
+    testLogging {
+        events("failed", "skipped")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        showExceptions = true
+        showCauses = true
+        showStackTraces = false
+    }
+}
+
 android {
     namespace = "com.mostafazahra.chesswake"
     compileSdk = 35

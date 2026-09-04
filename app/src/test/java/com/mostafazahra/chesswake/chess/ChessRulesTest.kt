@@ -30,7 +30,9 @@ class ChessRulesTest {
         val afterKingSide = MoveGenerator.applyMove(position, move("e1g1"))
         assertEquals(Piece.WHITE_KING, afterKingSide.pieceAt(square("g1")))
         assertEquals(Piece.WHITE_ROOK, afterKingSide.pieceAt(square("f1")))
-        assertNull("a1 must be empty after O-O", afterKingSide.pieceAt(square("a1")))
+        // Only the king-side rook travels: a1 keeps its rook, h1 is left empty.
+        assertEquals(Piece.WHITE_ROOK, afterKingSide.pieceAt(square("a1")))
+        assertNull("h1 must be empty after O-O", afterKingSide.pieceAt(square("h1")))
         assertEquals(PieceColor.BLACK, afterKingSide.sideToMove)
         // White has castled; Black has not.
         assertEquals("r3k2r/8/8/8/8/8/8/R4RK1 b kq - 1 1", afterKingSide.fen)
@@ -141,11 +143,18 @@ class ChessRulesTest {
     @Test
     fun `a move that leaves your own king in check is not generated`() {
         val position = position(ABSOLUTE_PIN)
-        // The black king is on e8 and the white rook on e1: nothing on the e-file
-        // may step aside, and the king may not step onto the file.
-        val illegal = listOf("e7d7", "e7f7", "e8d7", "e8f7")
+        // Black king e8, white rook e1: the black queen on e7 is absolutely
+        // pinned, so it may travel only along the e-file (e7e1 .. e7e6).
         val legal = MoveGenerator.legalMoves(position).map { it.uci }
-        illegal.forEach { assertFalse("$it must be illegal", it in legal) }
+        listOf("e7d7", "e7f7", "e7d6", "e7f8").forEach {
+            assertFalse("$it steps off the pin and must be illegal", it in legal)
+        }
+        // The king, by contrast, is free to step *off* the file: d7, d8, f7 and f8
+        // are attacked by neither the rook on e1 nor the king on g1.
+        listOf("e8d7", "e8d8", "e8f7", "e8f8").forEach {
+            assertTrue("$it must be legal", it in legal)
+        }
+        assertEquals("six queen moves along the pin, plus four king moves", 10, legal.size)
     }
 
     @Test
@@ -201,7 +210,12 @@ class ChessRulesTest {
         assertEquals(listOf("Nf3", "Nf6", "Ng1", "Ng8", "Nf3", "Nf6", "Ng1", "Ng8"), game.sanMoves)
         assertTrue(game.isThreefoldRepetition())
         assertEquals(3, game.repetitionCount())
-        assertEquals(Position.start().fen, game.position.fen)
+        // Every piece is home again, but the clocks are not: eight reversible
+        // half-moves have passed and it is move number 5.
+        assertEquals(
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 8 5",
+            game.position.fen,
+        )
     }
 
     @Test
@@ -215,8 +229,14 @@ class ChessRulesTest {
         val undone = game.undo()
         assertEquals("e7e5", undone?.uci)
         assertEquals(1, game.plyCount)
-        // Undoing e7e5 leaves the position after e2e4, ep target included.
-        assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", game.position.fen)
+        // Undoing e7e5 leaves the position after e2e4, ep target included:
+        // ChessWake records e3 for any double push and writes it back out, while
+        // python-chess hides it here because no black pawn can capture there. See
+        // reserialise() in tools/generate_test_vectors.py.
+        assertEquals(
+            "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+            game.position.fen,
+        )
 
         game.reset()
         assertEquals(0, game.plyCount)
