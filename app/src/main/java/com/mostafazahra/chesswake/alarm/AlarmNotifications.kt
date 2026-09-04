@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.mostafazahra.chesswake.MainActivity
 import com.mostafazahra.chesswake.R
 import com.mostafazahra.chesswake.alarm.domain.Alarm
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -48,16 +49,17 @@ class AlarmNotifications @Inject constructor(
     fun createChannels() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
-        val group = NotificationChannelGroup(GROUP_ID, context.getString(R.string.notification_group_alarms))
-        manager.createNotificationChannelGroup(group)
+        val channelGroup =
+            NotificationChannelGroup(GROUP_ID, context.getString(R.string.notification_group_alarms))
+        manager.createNotificationChannelGroup(channelGroup)
 
         val ringing = NotificationChannel(
             CHANNEL_RINGING,
             context.getString(R.string.channel_ringing_name),
             NotificationManager.IMPORTANCE_HIGH,
+            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_ringing_description)
-            group = GROUP_ID
             // The service owns the audio; a channel sound would double up.
             setSound(null, null)
             enableVibration(false)
@@ -69,9 +71,9 @@ class AlarmNotifications @Inject constructor(
             CHANNEL_SERVICE,
             context.getString(R.string.channel_service_name),
             NotificationManager.IMPORTANCE_HIGH,
+            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_service_description)
-            group = GROUP_ID
             setSound(null, null)
             enableVibration(false)
         }
@@ -80,9 +82,9 @@ class AlarmNotifications @Inject constructor(
             CHANNEL_UPCOMING,
             context.getString(R.string.channel_upcoming_name),
             NotificationManager.IMPORTANCE_LOW,
+            GROUP_ID,
         ).apply {
             description = context.getString(R.string.channel_upcoming_description)
-            group = GROUP_ID
             setShowBadge(false)
         }
 
