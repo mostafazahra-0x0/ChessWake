@@ -2,6 +2,7 @@ package com.mostafazahra.chesswake.settings.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -124,7 +125,7 @@ class SettingsRepository @Inject constructor(
         onboardingComplete = this[Keys.ONBOARDING_COMPLETE] ?: false,
     )
 
-    private fun Preferences.MutablePreferences.applySettings(settings: AppSettings) {
+    private fun MutablePreferences.applySettings(settings: AppSettings) {
         this[Keys.THEME_MODE] = settings.themeMode.name
         this[Keys.DYNAMIC_COLOR] = settings.dynamicColor
         this[Keys.DEFAULT_MAX_DIFFICULTY] = settings.defaultMaxDifficulty

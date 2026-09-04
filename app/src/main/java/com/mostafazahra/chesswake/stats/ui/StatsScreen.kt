@@ -374,7 +374,6 @@ private fun RecentAttemptRow(row: RecentRow) {
     }
 }
 
-@Composable
 private const val SEPARATOR = "  ·  "
 
 @Composable

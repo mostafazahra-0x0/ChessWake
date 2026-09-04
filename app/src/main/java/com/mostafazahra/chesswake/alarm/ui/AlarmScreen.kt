@@ -89,7 +89,10 @@ fun AlarmScreen(
     LaunchedEffect(state.feedbackTick) {
         if (state.feedbackTick == 0) return@LaunchedEffect
         when (state.feedbackKind) {
-            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.VirtualKey)
+            // Compose 1.7 exposes only LongPress and TextHandleMove; Confirm,
+            // Reject and VirtualKey arrived in 1.8. A wrong move and a solved
+            // puzzle share the strong buzz - the screen says which is which.
+            PuzzleFeedback.WRONG -> haptics.performHapticFeedback(HapticFeedbackType.LongPress)
             PuzzleFeedback.CORRECT -> haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             PuzzleFeedback.SOLVED -> haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         }

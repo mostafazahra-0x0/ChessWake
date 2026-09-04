@@ -22,9 +22,11 @@ object Routes {
     const val STATS = "stats"
     const val SETTINGS = "settings"
 
-    /** Alarm editor. `alarmId` is [NEW_ALARM_ID] when creating. */
-    const val ALARM_EDIT = "alarm_edit/{$ARG_ALARM_ID}"
+    /** Name of the alarm-id path argument in the editor route. */
     const val ARG_ALARM_ID = "alarmId"
+
+    /** Alarm editor. `alarmId` is [NEW_ALARM_ID] when creating. */
+    const val ALARM_EDIT = "alarm_edit/{${ARG_ALARM_ID}}"
 
     /** Sentinel meaning "create a new alarm instead of loading one". */
     const val NEW_ALARM_ID = -1L
