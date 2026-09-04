@@ -4,11 +4,16 @@
 Why this exists
 ---------------
 Kotlin compile errors, javac errors and JUnit failures are printed to the CI log,
-which on GitHub lives on a host that is not always reachable from every
-environment that has to debug the build. Annotations, by contrast, are served by
-the ordinary REST API (`/check-runs/{id}/annotations`), so re-emitting the
-interesting lines as `::error` commands makes a red build readable from anywhere
-and puts the message next to the offending file in the diff view.
+which lives on a host that is not reachable from every environment that has to
+debug the build. Annotations are served by the ordinary REST API
+(`/check-runs/{id}/annotations`), so re-emitting the interesting lines makes a red
+build readable from anywhere and puts each message next to its file in the diff.
+
+GitHub allows only **10 annotations of each level per step**, which is fewer than
+a broken build usually produces. So this script emits at most 8 file-scoped
+annotations (the ones worth clicking on) plus one aggregated annotation carrying
+*every* error it found - the aggregate is what keeps a long error list from being
+silently truncated.
 
 Usage
 -----
@@ -24,8 +29,11 @@ import re
 import sys
 from pathlib import Path
 
-MAX_ANNOTATIONS = 50
-MAX_MESSAGE_CHARS = 1200
+#: File-scoped annotations to emit before falling back to the aggregate only.
+MAX_FILE_ANNOTATIONS = 8
+#: GitHub truncates very long annotation messages; stay well inside the limit.
+MAX_MESSAGE_CHARS = 1000
+MAX_AGGREGATE_CHARS = 6000
 
 # Kotlin (K2 and the older frontend): e: file:///abs/path/Foo.kt:12:34 message
 KOTLIN = re.compile(r"^[ew]: file://(?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+) (?P<message>.*)$")
@@ -48,21 +56,22 @@ def relative(path: str) -> str:
     return stripped.lstrip("/") if stripped != path else path
 
 
-def emit(level: str, message: str, path: str | None = None, line: int | None = None, col: int | None = None) -> None:
+def escape(message: str, limit: int = MAX_MESSAGE_CHARS) -> str:
+    """Colons and newlines break the annotation command format."""
+    text = message.replace("%", "%25").replace("\r", " ").replace("\n", " ").strip()
+    if len(text) > limit:
+        text = text[:limit] + " [truncated]"
+    return text
+
+
+def command(level: str, message: str, path: str | None = None, line: int | None = None) -> str:
     props = []
     if path:
         props.append(f"file={relative(path)}")
     if line:
         props.append(f"line={line}")
-    if col:
-        props.append(f"col={col}")
-    props.append(f"title={level} in build")
-    # Colons and newlines break the annotation format.
-    text = message.replace("%", "%25").replace("\r", " ").replace("\n", " ").strip()
-    if len(text) > MAX_MESSAGE_CHARS:
-        text = text[:MAX_MESSAGE_CHARS] + " [truncated]"
-    prefix = f"::{level} {','.join(props)}::" if props else f"::{level}::"
-    print(prefix + text)
+    props.append("title=build failure")
+    return f"::{level} {','.join(props)}::{message}"
 
 
 def main(argv: list[str]) -> int:
@@ -72,35 +81,24 @@ def main(argv: list[str]) -> int:
         return 0
 
     lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
-    emitted = 0
-    kotlin_errors = 0
+
+    compile_errors: list[tuple[str, int, str]] = []
+    warnings: list[tuple[str, int, str]] = []
+    test_failures: list[str] = []
     tasks_failed: list[str] = []
-    tests_failed: list[str] = []
 
     for index, raw in enumerate(lines):
         line = raw.rstrip()
 
         match = KOTLIN.match(line)
         if match and match.group("message"):
-            level = "error" if line.startswith("e:") else "warning"
-            if level == "error":
-                kotlin_errors += 1
-            if emitted < MAX_ANNOTATIONS:
-                emit(
-                    level,
-                    match.group("message"),
-                    path=match.group("path"),
-                    line=int(match.group("line")),
-                    col=int(match.group("col")),
-                )
-                emitted += 1
+            entry = (match.group("path"), int(match.group("line")), match.group("message"))
+            (compile_errors if line.startswith("e:") else warnings).append(entry)
             continue
 
         match = JAVAC.match(line)
         if match:
-            if emitted < MAX_ANNOTATIONS:
-                emit("error", match.group("message"), path=match.group("path"), line=int(match.group("line")))
-                emitted += 1
+            compile_errors.append((match.group("path"), int(match.group("line")), match.group("message")))
             continue
 
         match = TASK_FAILED.match(line)
@@ -110,39 +108,53 @@ def main(argv: list[str]) -> int:
 
         match = TEST_FAILED.match(line)
         if match:
-            tests_failed.append(match.group("test"))
-            # The cause is indented on the following lines.
             cause = []
             for follow in lines[index + 1 : index + 6]:
                 stripped = follow.strip()
                 if not stripped:
                     break
                 cause.append(stripped)
-            if emitted < MAX_ANNOTATIONS:
-                emit("error", f"{match.group('test')} :: {' | '.join(cause)}")
-                emitted += 1
+            test_failures.append(f"{match.group('test')} :: {' | '.join(cause)}")
             continue
 
-    if kotlin_errors:
-        emit(
-            "error",
-            f"{kotlin_errors} Kotlin compile error(s); the first {min(kotlin_errors, MAX_ANNOTATIONS)} are annotated individually.",
-        )
-    if tasks_failed:
-        emit("error", "Failed Gradle task(s): " + ", ".join(dict.fromkeys(tasks_failed)))
+    # 1) A few file-scoped annotations, because those link to the diff.
+    for path, line, message in compile_errors[:MAX_FILE_ANNOTATIONS]:
+        print(command("error", escape(message), path=path, line=line))
 
-    if not kotlin_errors and not tests_failed:
-        # Not a compile or test failure: quote Gradle's own diagnosis so the
-        # reason is still readable without the log host.
+    # 2) Everything, aggregated, so the 10-per-step cap cannot hide errors.
+    if compile_errors:
+        summary = "; ".join(f"{relative(path)}:{line} {message}" for path, line, message in compile_errors)
+        total = len(compile_errors)
+        shown = min(total, MAX_FILE_ANNOTATIONS)
+        print(
+            command(
+                "error",
+                escape(f"{total} compile error(s) ({shown} annotated individually): {summary}", MAX_AGGREGATE_CHARS),
+            )
+        )
+
+    for failure in test_failures[:MAX_FILE_ANNOTATIONS]:
+        print(command("error", escape(failure)))
+    if test_failures:
+        print(command("error", escape(f"{len(test_failures)} test failure(s): " + "; ".join(test_failures), MAX_AGGREGATE_CHARS)))
+
+    if tasks_failed:
+        print(command("error", escape("Failed Gradle task(s): " + ", ".join(dict.fromkeys(tasks_failed)))))
+
+    # 3) Neither compile nor test errors: quote Gradle's own diagnosis instead.
+    if not compile_errors and not test_failures:
         for index, line in enumerate(lines):
             if WHAT_WENT_WRONG.match(line):
                 block = [entry.strip() for entry in lines[index + 1 : index + 40] if entry.strip()]
                 stop = next((i for i, entry in enumerate(block) if entry.startswith("* Try:")), len(block))
-                emit("error", " | ".join(block[: max(stop, 6)]) or "Gradle failed without a message")
+                print(command("error", escape(" | ".join(block[: max(stop, 6)]) or "Gradle failed without a message", MAX_AGGREGATE_CHARS)))
                 break
         else:
             tail = [entry.strip() for entry in lines[-40:] if entry.strip()]
-            emit("error", "Build failed with no recognisable Gradle diagnosis. Log tail: " + " | ".join(tail[-12:]))
+            print(command("error", escape("Build failed with no recognisable Gradle diagnosis. Log tail: " + " | ".join(tail[-12:]), MAX_AGGREGATE_CHARS)))
+
+    if warnings:
+        print(f"::notice::{escape(f'{len(warnings)} Kotlin warning(s) in the build log', MAX_MESSAGE_CHARS)}")
 
     return 0
 
