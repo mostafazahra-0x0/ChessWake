@@ -33,6 +33,14 @@ object TestVectors {
     /** Named entries under a top-level key, e.g. `positions` or `puzzles`. */
     fun section(root: JsonObject, key: String): Map<String, JsonObject> =
         root.getValue(key).jsonObject.mapValues { (_, value) -> value.jsonObject }
+
+    /** Ordered entries under a top-level array key, e.g. the generated puzzle list. */
+    fun entries(root: JsonObject, key: String): List<JsonObject> =
+        root.getValue(key).jsonArray.map { it.jsonObject }
+
+    /** Strings under a key that must be present, e.g. a `solution` line. */
+    fun strings(root: JsonObject, key: String): List<String> =
+        root.getValue(key).jsonArray.map { it.jsonPrimitive.content }
 }
 
 val JsonElement.obj: JsonObject get() = jsonObject
