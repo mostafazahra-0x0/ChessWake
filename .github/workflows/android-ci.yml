@@ -95,9 +95,14 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build the debug APK and run the unit tests
-        # tee keeps the log for the annotation step below; the default bash shell
-        # runs with pipefail, so a Gradle failure still fails the step.
-        run: ./gradlew --no-daemon --stacktrace assembleDebug testDebugUnitTest 2>&1 | tee build.log
+        # tee keeps the log for the annotation step below. pipefail is set
+        # explicitly: the default Linux shell is `bash -e` *without* pipefail, so
+        # a pipeline ending in tee would otherwise report tee's exit status and
+        # turn a failed build green.
+        shell: bash
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon --stacktrace assembleDebug testDebugUnitTest 2>&1 | tee build.log
 
       # Compile errors are otherwise only readable in the CI log. Re-emitting them
       # as annotations puts each one next to its file in the diff and makes a red
@@ -106,13 +111,15 @@ jobs:
         if: failure()
         run: python3 tools/annotate_ci_log.py build.log
 
+      # `error` rather than `warn`: a build that produces no APK must never look
+      # like a build that succeeded.
       - name: Upload the debug APK
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: chesswake-debug-apk
           path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 14
 
       - name: Upload the unit test report
